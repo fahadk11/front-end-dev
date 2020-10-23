@@ -1,0 +1,167 @@
+@extends('base-layout')
+
+@section('page-content')
+
+<!-- Sub banner start -->
+<div class="sub-banner overview-bgi">
+    <div class="container">
+        <div class="breadcrumb-area">
+            <h1>Contact us</h1>
+            <ul class="breadcrumbs">
+                <li><a href="{{url('/')}}">Home</a></li>
+                <li class="active">Contact us</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+
+<!-- Contact 2 start -->
+<div class="contact-2 content-area-5">
+    <div class="container">
+        <!-- Main title -->
+        <div class="main-title text-center">
+            <h1>Contact Us</h1>
+        </div>
+        <!-- Contact info -->
+        <div class="contact-info">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 mrg-btn-50">
+                    <i class="flaticon-pin"></i>
+                    <h5>Office Address</h5>
+                    <strong>Lahore, Pakistan</strong>
+                </div>
+                <div class="col-md-3 col-sm-6 mrg-btn-50">
+                    <i class="flaticon-phone"></i>
+                    <h5>Phone Number</h5>
+                    <strong>+92 3069 100 231</strong>
+                </div>
+                <div class="col-md-3 col-sm-6 mrg-btn-50">
+                    <i class="flaticon-mail-1"></i>
+                    <h5>Email Address</h5>
+                    <strong>admissionsguide6@gmail.com</strong>
+                </div>
+                <div class="col-md-3 col-sm-6 mrg-btn-50">
+                    <i class="flaticon-earth"></i>
+                    <h5>Web</h5>
+                    <strong>admissionGuide.com</strong>
+                </div>
+            </div>
+        </div>
+        <form action="{{url('contact')}}" method="post">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group name">
+                                <input type="text" name="name" class="form-control" placeholder="Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group email">
+                                <input type="email" name="email" class="form-control" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group subject">
+                                <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group number">
+                                <input type="text" name="phone" class="form-control" placeholder="Number">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group message">
+                                <textarea class="form-control" name="message" placeholder="Write message"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="send-btn text-center">
+                                <button type="submit" class="btn btn-md button-theme">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Contact 2 end -->
+
+<!-- Google map start -->
+<div class="section">
+    <div class="map">
+        <div id="map" class="contact-map"></div>
+    </div>
+</div>
+<!-- Google map end -->
+
+@endsection
+
+@section('footer')
+<script>
+    function LoadMap(propertes) {
+        var defaultLat = 31.4585134;
+        var defaultLng = 74.2864629;
+        var mapOptions = {
+            center: new google.maps.LatLng(defaultLat, defaultLng),
+            zoom: 15,
+            scrollwheel: false,
+            styles: [
+                {
+                    featureType: "administrative",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                },
+                {
+                    featureType: "water",
+                    elementType: "labels",
+                    stylers: [
+                        {visibility: "off"}
+                    ]
+                },
+                {
+                    featureType: 'poi.business',
+                    stylers: [{visibility: 'off'}]
+                },
+                {
+                    featureType: 'transit',
+                    elementType: 'labels.icon',
+                    stylers: [{visibility: 'off'}]
+                },
+            ]
+        };
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        var infoWindow = new google.maps.InfoWindow();
+        var myLatlng = new google.maps.LatLng(defaultLat, defaultLng);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map
+        });
+        (function (marker) {
+            google.maps.event.addListener(marker, "click", function (e) {
+                infoWindow.setContent("" +
+                    "<div class='map-properties contact-map-content'>" +
+                    "<div class='map-content'>" +
+                    "<p class='address'>Lahore, Pakistan</p>" +
+                    "<ul class='map-properties-list'> " +
+                    "<li><i class='flaticon-phone'></i>  +92 333 222 111</li> " +
+                    "<li><i class='flaticon-phone'></i>  info@admissionGuide.com.com</li> " +
+                    "<li><a href='index.html'><i class='fa fa-globe'></i>  http://admissionGuide.com</li></a> " +
+                    "</ul>" +
+                    "</div>" +
+                    "</div>");
+                infoWindow.open(map, marker);
+            });
+        })(marker);
+    }
+    LoadMap();
+</script>
+
+@endsection
